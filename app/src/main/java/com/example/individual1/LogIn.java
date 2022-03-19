@@ -3,6 +3,8 @@ package com.example.individual1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +15,16 @@ public class LogIn extends AppCompatActivity {
 
     private String username;
     private String pass;
+    private SQLiteDatabase bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        MiBD dbHelper = new MiBD(this,"pokedex",null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        bd = db;
     }
 
     // Comprobar los datos al darle al boton
@@ -30,9 +37,12 @@ public class LogIn extends AppCompatActivity {
         EditText et2 = findViewById(R.id.password);
         pass = et2.getText().toString();
 
-        // Si el usuario y la contraseña son correctos cambiar a la ventana correspondiente
-        if (username.equals("Ander") && pass.equals("1234")){
+        Cursor c = bd.rawQuery("SELECT * FROM Usuarios WHERE usuario='"+username+"' AND contraseña='"+pass+"'", null);
+        // Comprobar si el usuario y contraseña son correctos
+        if (c.moveToNext()){
 
+            // Si el usuario y contraseña son correctos cambiar al activity correspondente
+            Log.d("LogIn","Has sido logeado");
             Intent i = new Intent(this, MainActivity.class);
             startActivityForResult(i, 66);
             //startActivity(i);

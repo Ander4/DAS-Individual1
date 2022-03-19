@@ -29,12 +29,6 @@ public class Register extends AppCompatActivity {
 
     }
 
-//    public void setDB(SQLiteDatabase bd){
-//
-//        db = bd;
-//
-//    }
-
     // Comprobar los datos al darle al boton
     @SuppressLint("Range")
     public void onRegister(View v){
@@ -46,16 +40,14 @@ public class Register extends AppCompatActivity {
         EditText et2 = findViewById(R.id.passwordR);
         pass = et2.getText().toString();
 
-        String nom = "";
-
         Cursor c = bd.rawQuery("SELECT usuario FROM Usuarios WHERE usuario='"+username+"'", null);
 
         // Comprobar si el usuario esta en la base de datos
-        if (c.moveToNext()){
+        if (!c.moveToNext()){
 
             // Si el usuario no esta meterlo y cambiar a main activity
             String query = "INSERT INTO Usuarios(usuario, contraseña) VALUES(\'" + username + "\', \'" + pass + "\')";
-            Log.d("INsert", query);
+            //Log.d("INsert", query);
             bd.execSQL(query);
             Intent i = new Intent(this, MainActivity.class);
             startActivityForResult(i, 66);

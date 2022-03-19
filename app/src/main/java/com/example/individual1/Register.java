@@ -48,35 +48,29 @@ public class Register extends AppCompatActivity {
 
         String nom = "";
 
-        Cursor c = bd.rawQuery("SELECT * FROM Usuarios", null);
-        while (c.moveToNext()){
+        Cursor c = bd.rawQuery("SELECT usuario FROM Usuarios WHERE usuario='"+username+"'", null);
 
-            int cod = c.getInt(0);
-            nom = nom + c.getString(1);
-            Log.d("Prueba", nom);
+        // Comprobar si el usuario esta en la base de datos
+        if (c.moveToNext()){
+
+            // Si el usuario no esta meterlo y cambiar a main activity
+            String query = "INSERT INTO Usuarios(usuario, contraseña) VALUES(\'" + username + "\', \'" + pass + "\')";
+            Log.d("INsert", query);
+            bd.execSQL(query);
+            Intent i = new Intent(this, MainActivity.class);
+            startActivityForResult(i, 66);
+            //startActivity(i);
+
+        }else {
+
+            // Si el usuario ya esta registrado hacer un toast para avisar de que el usuario ya esta en uso
+            Toast toast = Toast.makeText(this, "El usuario ya esta en uso",Toast.LENGTH_SHORT);
+            toast.setMargin(50,50);
+            toast.show();
+
+            //Log.d("Pruebita", "UwU");
 
         }
-
-        // Si el usuario no esta en la base de datos, registrarlo y cambiar a la pantalla de login
-//        if (!username.equals("Ander")){
-//
-//            String query = "INSERT INTO Usuarios(usuario, contraseña) VALUES(\'" + username + "\', \'" + pass + "\')";
-//            Log.d("INsert", query);
-//            bd.execSQL(query);
-//            Intent i = new Intent(this, MainActivity.class);
-//            startActivityForResult(i, 66);
-//            //startActivity(i);
-//
-//        }else {
-//
-//            // Si el usuario ya esta registrado hacer un toast para avisar de que el usuario ya esta en uso
-//            Toast toast = Toast.makeText(this, "El usuario ya esta en uso",Toast.LENGTH_SHORT);
-//            toast.setMargin(50,50);
-//            toast.show();
-//
-//            //Log.d("Pruebita", "UwU");
-//
-//        }
 
 
 

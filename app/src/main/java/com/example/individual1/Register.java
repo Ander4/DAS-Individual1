@@ -60,8 +60,6 @@ public class Register extends AppCompatActivity {
             toast.setMargin(50,50);
             toast.show();
 
-            //Log.d("Pruebita", "UwU");
-
         }
 
 

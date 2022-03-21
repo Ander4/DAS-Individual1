@@ -43,7 +43,7 @@ public class LogIn extends AppCompatActivity {
 
             // Si el usuario y contraseña son correctos cambiar al activity correspondente
             Log.d("LogIn","Has sido logeado");
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(this, ListaPokemon.class);
             startActivityForResult(i, 66);
 
         }else {

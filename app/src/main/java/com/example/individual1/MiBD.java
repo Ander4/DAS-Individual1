@@ -24,6 +24,10 @@ public class MiBD extends SQLiteOpenHelper {
         Log.d("Creada tabla pokemon", query2);
         sqLiteDatabase.execSQL(query2);
 
+        String query3 = "CREATE TABLE Favoritos(usuario VARCHAR(50) NOT NULL, pokemon VARCHAR(50) NOT NULL, PRIMARY KEY(usuario,pokemon), FOREIGN KEY(usuario) REFERENCES Usuarios(usuario), FOREIGN KEY(pokemon) REFERENCES Pokemon(nombre))";
+        Log.d("Creada tabla Favoritos", query3);
+        sqLiteDatabase.execSQL(query3);
+
         String pokemon1 = "INSERT INTO Pokemon Values('Charmander','Fuego','Ninguno')";
         Log.i("Insertar pokemon1", pokemon1);
         sqLiteDatabase.execSQL(pokemon1);

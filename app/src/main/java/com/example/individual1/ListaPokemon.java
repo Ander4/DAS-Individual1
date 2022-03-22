@@ -8,18 +8,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
 public class ListaPokemon extends AppCompatActivity implements PokemonListFragment.listenerDelFragment{
 
     private SQLiteDatabase bd;
-    ArrayList<Pokemon> a;
+    private ArrayList<Pokemon> a;
+    private String usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_pokemon);
+        setSupportActionBar(findViewById(R.id.labarra));
+
+        Intent iin = getIntent();
+        Bundle b = iin.getExtras();
+        usuario = (String) b.get("user");
 
         MiBD dbHelper = new MiBD(this,"pokedex",null,1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -75,8 +83,30 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
             i.putExtra("nombre", n);
             i.putExtra("tipo1", tp1);
             i.putExtra("tipo2", tp2);
+            i.putExtra("user", usuario);
             startActivity(i);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lista_pokemon,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        switch (id){
+            default:{
+
+                Intent i = new Intent(this, FavoritosActivity.class);
+                i.putExtra("user", usuario);
+                startActivity(i);
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

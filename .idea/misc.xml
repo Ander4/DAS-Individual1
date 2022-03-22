@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/activity_list_view.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/activity_lista_pokemon.xml" value="0.264" />
         <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/activity_main.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/activity_second.xml" value="0.2" />
+        <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/favoritos_list_view.xml" value="0.2" />
+        <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/favoritos_main.xml" value="0.2" />
         <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/login.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/pokemon_info_fragment.xml" value="0.264" />
         <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/layout/register.xml" value="0.176" />
+        <entry key="..\:/Users/ander/AndroidStudioProjects/Individual1/app/src/main/res/menu/menu_wapardo.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

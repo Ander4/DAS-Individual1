@@ -49,6 +49,8 @@ public class PokemonInfoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
+
+        // Recoger el usuario que le hemos pasado desde ListaPokemon
         Intent iin = this.getActivity().getIntent();
         Bundle b = iin.getExtras();
         nombre = (String) b.get("nombre");
@@ -56,7 +58,10 @@ public class PokemonInfoFragment extends Fragment {
         tipo2 = (String) b.get("tipo2");
         usuario = (String) b.get("user");
         link = "https://www.wikidex.net/wiki/"+nombre;
+
         iniciarBD();
+
+        // Cambiar los elementos del layout a corde c los parametros recividos
         tv_nombre= getView().findViewById(R.id.nombre);
         tv_tipo1= getView().findViewById(R.id.tipo1);
         tv_tipo2= getView().findViewById(R.id.tipo2);
@@ -66,33 +71,43 @@ public class PokemonInfoFragment extends Fragment {
         tv_nombre.setText(nombre);
         tv_tipo1.setText(tipo1);
         tv_tipo2.setText(tipo2);
+        setImage();
+
+        Log.d("prueba", "onActivityCreated: paso por aquí");
+
+        // Setear el onClick del boton Mas Info
         btn_info.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Abrir en el navegador el link
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                 startActivity(i);
             }
         });
+
+        // Setear el onClick del boton Favorito
         btn_fav.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                // Ejecutar el query para comprobar si el pokemon esta en la lista de favoritos del usuario
                 Cursor c = bd.rawQuery("SELECT * FROM Favoritos WHERE usuario=\'"+usuario+"\' AND pokemon=\'"+nombre+"\'" , null);
+
+                // Comprobar si el pokemon esta en la lista de favoritos del usuario
                 if (!c.moveToNext()) {
 
-                    Log.i("query", "INSERT INTO Favoritos(usuario,pokemon) VALUES(\'"+usuario+"\',\'"+nombre+"\')");
+                    // Si el pokemon no esta en la lista añadirlo
                     bd.execSQL("INSERT INTO Favoritos(usuario,pokemon) VALUES(\'"+usuario+"\',\'"+nombre+"\')");
                     Log.i("Favoritos","Añadido a favoritos");
 
                 } else {
 
+                    // Si el pokemon esta en la lista eliminarlo
                     bd.execSQL("DELETE FROM Favoritos WHERE usuario=\'"+usuario+"\' AND pokemon=\'"+nombre+"\'");
                     Log.i("Favoritos","Borrado de favoritos");
 
                 }
             }
         });
-        setImage();
-        Log.d("prueba", "onActivityCreated: paso por aquí");
-        Log.i("Info", "El nombre ha sido cambiado");
+
     }
 
     private void iniciarBD() {
@@ -103,6 +118,7 @@ public class PokemonInfoFragment extends Fragment {
 
     }
 
+    // Cambiar la imagen del Pokemon de acuerdo a su nombre
     private void setImage(){
 
         Log.i("switch","Pasamos por el switch");
@@ -134,6 +150,7 @@ public class PokemonInfoFragment extends Fragment {
 
     }
 
+    // Actualizar los parametros de acuerdo a los recibidos
     public void actualizarDatos(String n, String tp1, String tp2){
 
         Log.d("prueba", "actualizarDatos: llego aquí");

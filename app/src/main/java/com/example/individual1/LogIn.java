@@ -27,7 +27,7 @@ public class LogIn extends AppCompatActivity {
         bd = db;
     }
 
-    // Comprobar los datos al darle al boton
+    // Comprobar los datos al darle al boton entrar
     public void onEntrar(View v){
 
         // Conseguir el usuario introducido
@@ -37,11 +37,12 @@ public class LogIn extends AppCompatActivity {
         EditText et2 = findViewById(R.id.password);
         pass = et2.getText().toString();
 
+        // Ejecutar el query para ver si el usuario y contraseña estan en la base de datos
         Cursor c = bd.rawQuery("SELECT * FROM Usuarios WHERE usuario='"+username+"' AND contraseña='"+pass+"'", null);
         // Comprobar si el usuario y contraseña son correctos
         if (c.moveToNext()){
 
-            // Si el usuario y contraseña son correctos cambiar al activity correspondente
+            // Si el usuario y contraseña son correctos cambiar al activity ListaPokemon
             Log.d("LogIn","Has sido logeado");
             Intent i = new Intent(this, ListaPokemon.class);
             i.putExtra("user", username);

@@ -48,6 +48,7 @@ public class CustomAdapter extends BaseAdapter {
         return view;
     }
 
+    // Cambiar la imagen del pokemon dependiendo del nombre de este
     private void setImages(ImageView icon, String nombre) {
 
         switch (nombre){

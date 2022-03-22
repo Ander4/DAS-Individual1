@@ -25,6 +25,7 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
         setContentView(R.layout.activity_lista_pokemon);
         setSupportActionBar(findViewById(R.id.labarra));
 
+        // Recoger el usuario que le hemos pasado desde LogIn
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         usuario = (String) b.get("user");
@@ -35,8 +36,10 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
 
         a = new ArrayList<>();
 
+        // Ejecutar el query para conseguir la lista de Pokemon de la base de datos
         Cursor c = bd.rawQuery("SELECT * FROM Pokemon" , null);
 
+        // Añadir los pokemon de la base de datos al ArrayList
         while (c.moveToNext()){
 
             int nombre_c = c.getColumnIndex("nombre");
@@ -46,13 +49,6 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
             a.add(new Pokemon(c.getString(nombre_c), c.getString(tipo1_c), c.getString(tipo2_c)));
 
         }
-
-        for (int i=0; i<a.size();i++){
-
-            Log.i("Pokemon",a.get(i).getNombre() + " " + a.get(i).getTipo1() + " " + a.get(i).getTipo2());
-
-        }
-
 
     }
 
@@ -66,6 +62,7 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
         return s;
     }
 
+    // Controlar el comportamiento al pulsar un elemento de la lista
     public void seleccionarElemento(int pos) {
 
         String n = a.get(pos).getNombre();
@@ -94,6 +91,7 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
         return true;
     }
 
+    // Al darle a favoritos en la barra superior cambiar a FavoritosActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();

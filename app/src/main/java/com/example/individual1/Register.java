@@ -29,7 +29,7 @@ public class Register extends AppCompatActivity {
 
     }
 
-    // Comprobar los datos al darle al boton
+    // Comprobar los datos al darle al boton register
     @SuppressLint("Range")
     public void onRegister(View v){
 
@@ -40,6 +40,7 @@ public class Register extends AppCompatActivity {
         EditText et2 = findViewById(R.id.passwordR);
         pass = et2.getText().toString();
 
+        // Ejecutar el query para ver si el usuario esta en la tabla Usuarios
         Cursor c = bd.rawQuery("SELECT usuario FROM Usuarios WHERE usuario='"+username+"'", null);
 
         // Comprobar si el usuario esta en la base de datos
@@ -47,11 +48,9 @@ public class Register extends AppCompatActivity {
 
             // Si el usuario no esta meterlo y cambiar a main activity
             String query = "INSERT INTO Usuarios(usuario, contraseña) VALUES(\'" + username + "\', \'" + pass + "\')";
-            //Log.d("INsert", query);
             bd.execSQL(query);
             Intent i = new Intent(this, MainActivity.class);
             startActivityForResult(i, 66);
-            //startActivity(i);
 
         }else {
 

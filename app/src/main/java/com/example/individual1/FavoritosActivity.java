@@ -35,6 +35,7 @@ public class FavoritosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favoritos_main);
 
+        // Recoger el usuario que le hemos pasado desde ListaPokemon
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         usuario = (String) b.get("user");
@@ -44,6 +45,7 @@ public class FavoritosActivity extends AppCompatActivity {
         bd = db;
 
         int idx;
+        // Ejecutar el query para conseguir la lista de favoritos asociada al usuario
         Cursor c = bd.rawQuery("SELECT * FROM Favoritos WHERE usuario=\'"+usuario+"\'" , null);
         while (c.moveToNext()) {
 
@@ -52,6 +54,7 @@ public class FavoritosActivity extends AppCompatActivity {
 
         }
 
+        // Añadir el adapter a la lista para que tome el control
         simpleList = (ListView) findViewById(R.id.simpleListView);
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), pokemonList, pokemones);
         simpleList.setAdapter(customAdapter);

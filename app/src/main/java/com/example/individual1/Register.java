@@ -39,7 +39,7 @@ public class Register extends AppCompatActivity {
 
     // Comprobar los datos al darle al boton register
     @SuppressLint("Range")
-    public void onRegister(View v){
+    public void onRegister(View v) {
 
         // Conseguir el usuario introducido
         EditText et = findViewById(R.id.usernameR);
@@ -48,59 +48,67 @@ public class Register extends AppCompatActivity {
         EditText et2 = findViewById(R.id.passwordR);
         pass = et2.getText().toString();
 
-        // Ejecutar el query para ver si el usuario esta en la tabla Usuarios
-        Cursor c = bd.rawQuery("SELECT usuario FROM Usuarios WHERE usuario='"+username+"'", null);
+        if (!username.equals("") && !pass.equals("")) {
 
-        // Comprobar si el usuario esta en la base de datos
-        if (!c.moveToNext()){
+            // Ejecutar el query para ver si el usuario esta en la tabla Usuarios
+            Cursor c = bd.rawQuery("SELECT usuario FROM Usuarios WHERE usuario='" + username + "'", null);
 
-            // Si el usuario no esta meterlo y cambiar a main activity
-            String query = "INSERT INTO Usuarios(usuario, contraseña) VALUES(\'" + username + "\', \'" + pass + "\')";
-            bd.execSQL(query);
+            // Comprobar si el usuario esta en la base de datos
+            if (!c.moveToNext()) {
 
-            Intent i = new Intent(this, MainActivity.class);
-            startActivityForResult(i, 66);
-            PendingIntent intentEnNot = PendingIntent.getActivity(this, 0, i, 0);
+                // Si el usuario no esta meterlo y cambiar a main activity
+                String query = "INSERT INTO Usuarios(usuario, contraseña) VALUES(\'" + username + "\', \'" + pass + "\')";
+                bd.execSQL(query);
 
-            NotificationManager elManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(this, "IdCanal");
+                Intent i = new Intent(this, MainActivity.class);
+                startActivityForResult(i, 66);
+                PendingIntent intentEnNot = PendingIntent.getActivity(this, 0, i, 0);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
-                        NotificationManager.IMPORTANCE_DEFAULT);
-                elManager.createNotificationChannel(elCanal);
+                NotificationManager elManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(this, "IdCanal");
 
-                setContentView(R.layout.register);
-                elCanal.setDescription("Descripción del canal");
-                elCanal.enableLights(true);
-                elCanal.setLightColor(Color.RED);
-                elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-                elCanal.enableVibration(true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
+                            NotificationManager.IMPORTANCE_DEFAULT);
+                    elManager.createNotificationChannel(elCanal);
+
+                    setContentView(R.layout.register);
+                    elCanal.setDescription("Descripción del canal");
+                    elCanal.enableLights(true);
+                    elCanal.setLightColor(Color.RED);
+                    elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+                    elCanal.enableVibration(true);
+                }
+
+                elBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.notificacion))
+                        .setSmallIcon(android.R.drawable.star_on)
+                        .setContentTitle("Notificación de registro")
+                        .setContentText("El usuario: " + username + " ha sido \nregistrado")
+                        .setSubText("Registro nuevo")
+                        .setVibrate(new long[]{0, 1000, 500, 1000})
+                        .setAutoCancel(true)
+                        .addAction(android.R.drawable.ic_input_add, "OK", intentEnNot);
+
+                elManager.notify(1, elBuilder.build());
+                Log.i("Notificacion", "Has sido notificado");
+
+
+            } else {
+
+                // Si el usuario ya esta registrado hacer un toast para avisar de que el usuario ya esta en uso
+                Toast toast = Toast.makeText(this, "El usuario ya esta en uso", Toast.LENGTH_SHORT);
+                toast.show();
+
             }
 
-            elBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.notificacion))
-                    .setSmallIcon(android.R.drawable.star_on)
-                    .setContentTitle("Notificación de registro")
-                    .setContentText("El usuario: "+username + " ha sido \nregistrado")
-                    .setSubText("Registro nuevo")
-                    .setVibrate(new long[]{0, 1000, 500, 1000})
-                    .setAutoCancel(true)
-                    .addAction(android.R.drawable.ic_input_add, "OK", intentEnNot);
+            c.close();
 
-            elManager.notify(1, elBuilder.build());
-            Log.i("Notificacion","Has sido notificado");
+        } else {
 
-
-        }else {
-
-            // Si el usuario ya esta registrado hacer un toast para avisar de que el usuario ya esta en uso
-            Toast toast = Toast.makeText(this, "El usuario ya esta en uso",Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Porfavor rellena los campos de usuario y contraseña", Toast.LENGTH_SHORT);
             toast.show();
 
         }
-
-        c.close();
-
     }
 
 }

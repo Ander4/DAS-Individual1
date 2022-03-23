@@ -17,10 +17,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MiBD dbHelper = new MiBD(this,"pokedex",null,1);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        bd = db;
-
     }
 
     // Cambiar a la ventana de login

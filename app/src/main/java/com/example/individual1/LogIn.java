@@ -52,7 +52,6 @@ public class LogIn extends AppCompatActivity {
 
             // Si el usuario y la contraseña no coinciden crear un toast para avisar de que ha habido un error en el login
             Toast toast = Toast.makeText(this, "Login error",Toast.LENGTH_SHORT);
-            toast.setMargin(50,50);
             toast.show();
 
             // y borrar los campos de usuario y contraseña

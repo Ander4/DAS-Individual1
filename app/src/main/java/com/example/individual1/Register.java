@@ -95,7 +95,6 @@ public class Register extends AppCompatActivity {
 
             // Si el usuario ya esta registrado hacer un toast para avisar de que el usuario ya esta en uso
             Toast toast = Toast.makeText(this, "El usuario ya esta en uso",Toast.LENGTH_SHORT);
-            toast.setMargin(50,50);
             toast.show();
 
         }

@@ -9,6 +9,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
@@ -38,15 +39,39 @@ public class Register extends AppCompatActivity {
     }
 
     // Comprobar los datos al darle al boton register
-    @SuppressLint("Range")
     public void onRegister(View v) {
 
-        // Conseguir el usuario introducido
-        EditText et = findViewById(R.id.usernameR);
-        username = et.getText().toString();
-        // Conseguir la contraseña introducida
-        EditText et2 = findViewById(R.id.passwordR);
-        pass = et2.getText().toString();
+        EditText et;
+        EditText et2;
+
+        // Comprobar la orientación del dispositivo
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+            // Si está en LANDSCAPE conseguir los datos de su layout
+
+            // Conseguir el usuario introducido
+            et = findViewById(R.id.usernameRL);
+            username = et.getText().toString();
+            // Conseguir la contraseña introducida
+            et2 = findViewById(R.id.passwordRL);
+            pass = et2.getText().toString();
+
+
+        } else {
+
+            // Si está en PORTRAIT conseguir los datos de su layout
+
+            // Conseguir el usuario introducido
+            et = findViewById(R.id.usernameR);
+            username = et.getText().toString();
+            // Conseguir la contraseña introducida
+            et2 = findViewById(R.id.passwordR);
+            pass = et2.getText().toString();
+
+        }
+
+
 
         if (!username.equals("") && !pass.equals("")) {
 

@@ -1,11 +1,19 @@
 package com.example.individual1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,8 +57,39 @@ public class Register extends AppCompatActivity {
             // Si el usuario no esta meterlo y cambiar a main activity
             String query = "INSERT INTO Usuarios(usuario, contraseña) VALUES(\'" + username + "\', \'" + pass + "\')";
             bd.execSQL(query);
+
             Intent i = new Intent(this, MainActivity.class);
             startActivityForResult(i, 66);
+            PendingIntent intentEnNot = PendingIntent.getActivity(this, 0, i, 0);
+
+            NotificationManager elManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(this, "IdCanal");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                elManager.createNotificationChannel(elCanal);
+
+                setContentView(R.layout.register);
+                elCanal.setDescription("Descripción del canal");
+                elCanal.enableLights(true);
+                elCanal.setLightColor(Color.RED);
+                elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+                elCanal.enableVibration(true);
+            }
+
+            elBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.notificacion))
+                    .setSmallIcon(android.R.drawable.star_on)
+                    .setContentTitle("Notificación de registro")
+                    .setContentText("El usuario: "+username + " ha sido \nregistrado")
+                    .setSubText("Registro nuevo")
+                    .setVibrate(new long[]{0, 1000, 500, 1000})
+                    .setAutoCancel(true)
+                    .addAction(android.R.drawable.ic_input_add, "OK", intentEnNot);
+
+            elManager.notify(1, elBuilder.build());
+            Log.i("Notificacion","Has sido notificado");
+
 
         }else {
 

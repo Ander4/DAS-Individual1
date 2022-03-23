@@ -33,11 +33,13 @@ public class PokemonInfoFragment extends Fragment {
     private ImageView iv_img;
     private Button btn_info, btn_fav;
     private SQLiteDatabase bd;
+    private Context contexto;
 
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        this.contexto = context;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -127,9 +129,10 @@ public class PokemonInfoFragment extends Fragment {
 
             case "Charmander": {
 
+//                String mDrawableName = nombre;
+//                int resID = contexto.getResources().getIdentifier(mDrawableName , "drawable", contexto.getPackageName());
                 iv_img.setImageResource(R.drawable.charmander);
                 break;
-
             }
 
             case "Bulbasaur": {

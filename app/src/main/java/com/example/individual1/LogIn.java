@@ -61,7 +61,7 @@ public class LogIn extends AppCompatActivity {
 
         }
 
-
+        c.close();
 
     }
 

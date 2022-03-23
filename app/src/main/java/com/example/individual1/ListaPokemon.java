@@ -50,6 +50,8 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
 
         }
 
+        c.close();
+
     }
 
     @Override

@@ -54,6 +54,8 @@ public class FavoritosActivity extends AppCompatActivity {
 
         }
 
+        c.close();
+
         // Añadir el adapter a la lista para que tome el control
         simpleList = (ListView) findViewById(R.id.simpleListView);
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), pokemonList, pokemones);

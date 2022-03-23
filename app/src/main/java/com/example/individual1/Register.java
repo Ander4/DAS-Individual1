@@ -100,7 +100,7 @@ public class Register extends AppCompatActivity {
 
         }
 
-
+        c.close();
 
     }
 

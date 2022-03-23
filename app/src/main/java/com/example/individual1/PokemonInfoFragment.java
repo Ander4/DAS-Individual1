@@ -149,6 +149,8 @@ public class PokemonInfoFragment extends Fragment {
                     alert.show();
 
                 }
+
+                c.close();
             }
         });
 

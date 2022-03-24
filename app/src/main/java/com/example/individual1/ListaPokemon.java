@@ -71,11 +71,11 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
         String tp1 = a.get(pos).getTipo1();
         String tp2 = a.get(pos).getTipo2();
 
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        PokemonInfoFragment elotro = (PokemonInfoFragment) getSupportFragmentManager().findFragmentById(R.id.Finfo);
+        if (elotro != null) {
             //EL OTRO FRAGMENT EXISTE
-            PokemonInfoFragment elotro = (PokemonInfoFragment) getSupportFragmentManager().findFragmentById(R.id.Finfo);
             elotro.actualizarDatos(n,tp1,tp2);
+
         } else {
             //EL OTRO FRAGMENT NO EXISTE, HAY QUE LANZAR LA ACTIVIDAD QUE LO CONTIENE
             Intent i = new Intent(this, SecondActivity.class);

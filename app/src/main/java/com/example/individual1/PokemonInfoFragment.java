@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -65,16 +66,35 @@ public class PokemonInfoFragment extends Fragment {
 
         iniciarBD();
 
-        // Cambiar los elementos del layout a corde c los parametros recividos
-        tv_nombre= getView().findViewById(R.id.nombre);
-        tv_tipo1= getView().findViewById(R.id.tipo1);
-        tv_tipo2= getView().findViewById(R.id.tipo2);
-        btn_info=getView().findViewById(R.id.info);
-        btn_fav=getView().findViewById(R.id.favs);
-        iv_img=getView().findViewById(R.id.imageView);
-        tv_nombre.setText(nombre);
-        tv_tipo1.setText(tipo1);
-        tv_tipo2.setText(tipo2);
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+            // Cambiar los elementos del layout LANDSCAPE a corde a los parametros recividos
+            tv_nombre= getView().findViewById(R.id.nombreL);
+            tv_tipo1= getView().findViewById(R.id.tipo1L);
+            tv_tipo2= getView().findViewById(R.id.tipo2L);
+            btn_info=getView().findViewById(R.id.infoL);
+            btn_fav=getView().findViewById(R.id.favsL);
+            iv_img=getView().findViewById(R.id.imageViewL);
+            tv_nombre.setText(nombre);
+            tv_tipo1.setText(tipo1);
+            tv_tipo2.setText(tipo2);
+
+        } else {
+
+            // Cambiar los elementos del layout PORTRAIT a corde a los parametros recividos
+            tv_nombre= getView().findViewById(R.id.nombre);
+            tv_tipo1= getView().findViewById(R.id.tipo1);
+            tv_tipo2= getView().findViewById(R.id.tipo2);
+            btn_info=getView().findViewById(R.id.info);
+            btn_fav=getView().findViewById(R.id.favs);
+            iv_img=getView().findViewById(R.id.imageView);
+            tv_nombre.setText(nombre);
+            tv_tipo1.setText(tipo1);
+            tv_tipo2.setText(tipo2);
+
+        }
+
         setImage();
 
         Log.d("prueba", "onActivityCreated: paso por aquí");

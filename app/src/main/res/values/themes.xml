@@ -19,6 +19,36 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ButtonStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@color/purple_200</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BotonFavorito">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">#FFFF00</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BotonInfo">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@color/teal_200</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="Theme.Individual1.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Individual1.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

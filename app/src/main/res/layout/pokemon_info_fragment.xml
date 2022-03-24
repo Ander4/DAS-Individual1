@@ -81,6 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tipo1" />
 
     <Button
+        style="@style/BotonInfo"
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,6 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <Button
+        style="@style/BotonFavorito"
         android:id="@+id/favs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -63,6 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
+        style="@style/ButtonStyle"
         android:id="@+id/entrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

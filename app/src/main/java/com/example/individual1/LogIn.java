@@ -3,6 +3,7 @@ package com.example.individual1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -30,12 +31,32 @@ public class LogIn extends AppCompatActivity {
     // Comprobar los datos al darle al boton entrar
     public void onEntrar(View v) {
 
-        // Conseguir el usuario introducido
-        EditText et_u = findViewById(R.id.username);
-        username = et_u.getText().toString();
-        // Conseguir la contraseña introducida
-        EditText et_p = findViewById(R.id.password);
-        pass = et_p.getText().toString();
+        EditText et_u;
+        EditText et_p;
+
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+            // Si está en LANDSCAPE conseguir los datos de su layout
+
+            // Conseguir el usuario introducido
+            et_u = findViewById(R.id.usernameL);
+            username = et_u.getText().toString();
+            // Conseguir la contraseña introducida
+            et_p = findViewById(R.id.passwordL);
+            pass = et_p.getText().toString();
+        } else {
+
+            // Si está en PORTRAIT conseguir los datos de su layout
+
+            // Conseguir el usuario introducido
+            et_u = findViewById(R.id.username);
+            username = et_u.getText().toString();
+            // Conseguir la contraseña introducida
+            et_p = findViewById(R.id.password);
+            pass = et_p.getText().toString();
+
+        }
 
         if (!username.equals("") && !pass.equals("")) {
 
@@ -49,6 +70,10 @@ public class LogIn extends AppCompatActivity {
                 Intent i = new Intent(this, ListaPokemon.class);
                 i.putExtra("user", username);
                 startActivityForResult(i, 66);
+
+                // y borrar los campos de usuario y contraseña
+                et_u.setText("");
+                et_p.setText("");
 
             } else {
 

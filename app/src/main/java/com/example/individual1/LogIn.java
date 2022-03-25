@@ -31,6 +31,8 @@ public class LogIn extends AppCompatActivity {
     // Comprobar los datos al darle al boton entrar
     public void onEntrar(View v) {
 
+        Log.i("Recorrido","Paso por onEntrar LogIn");
+
         EditText et_u;
         EditText et_p;
 
@@ -39,6 +41,7 @@ public class LogIn extends AppCompatActivity {
 
             // Si está en LANDSCAPE conseguir los datos de su layout
 
+            Log.i("Recorrido", "Recivo los datos de Registro del layout LANDSCAPE");
             // Conseguir el usuario introducido
             et_u = findViewById(R.id.usernameL);
             username = et_u.getText().toString();
@@ -49,6 +52,7 @@ public class LogIn extends AppCompatActivity {
 
             // Si está en PORTRAIT conseguir los datos de su layout
 
+            Log.i("Recorrido", "Recivo los datos de Registro del layout PORTRAIT");
             // Conseguir el usuario introducido
             et_u = findViewById(R.id.username);
             username = et_u.getText().toString();
@@ -60,6 +64,7 @@ public class LogIn extends AppCompatActivity {
 
         if (!username.equals("") && !pass.equals("")) {
 
+            Log.i("Recorrido","El usuario y contraseña no están vacios");
             // Ejecutar el query para ver si el usuario y contraseña estan en la base de datos
             Cursor c = bd.rawQuery("SELECT * FROM Usuarios WHERE usuario='" + username + "' AND contraseña='" + pass + "'", null);
             // Comprobar si el usuario y contraseña son correctos
@@ -77,12 +82,14 @@ public class LogIn extends AppCompatActivity {
 
             } else {
 
+                Log.i("Recorrido","La pareja de usuario y contraseña no está en la base de datos");
                 // Ejecutar un query para comprobar si el usuario está en la base de datos
                 Cursor c2 = bd.rawQuery("SELECT * FROM Usuarios WHERE usuario='" + username + "'", null);
 
                 // comprobar si el usuario está en la base de datos
                 if (!c2.moveToNext()) {
 
+                    Log.i("Recorrido","El usuario no está en la base de datos");
                     // Si el usuario no está en la base de datos
                     Toast toast = Toast.makeText(this, "El usuario " + username + " no está registrado", Toast.LENGTH_SHORT);
                     toast.show();
@@ -93,6 +100,7 @@ public class LogIn extends AppCompatActivity {
 
                 } else {
 
+                    Log.i("Recorrido","El usuario está en la base de datos, pero la contraseña no coincide");
                     // Si el usuario está en la base de datos pero la contraseña no coincide
                     Toast toast = Toast.makeText(this, "El usuario " + username + " y la contraseña no coinciden", Toast.LENGTH_SHORT);
                     toast.show();
@@ -110,6 +118,7 @@ public class LogIn extends AppCompatActivity {
 
         } else {
 
+            Log.i("Recorrido","El usuario y contraseña están vacios");
             Toast toast = Toast.makeText(this, "Porfavor rellena los campos de usuario y contraseña", Toast.LENGTH_SHORT);
             toast.show();
 

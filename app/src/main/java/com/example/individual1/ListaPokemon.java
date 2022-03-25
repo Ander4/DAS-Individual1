@@ -56,6 +56,8 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
 
     @Override
     public String[] cargarElementos() {
+
+        Log.i("Recorrido","Paso por cargarElementos ListaPokemon");
         String [] s = new String[a.size()];
         int i = 0;
         for (Pokemon po : a)
@@ -67,24 +69,18 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
     // Controlar el comportamiento al pulsar un elemento de la lista
     public void seleccionarElemento(int pos) {
 
+        Log.i("Recorrido","Paso por seleccionarElemento ListaPokemon");
         String n = a.get(pos).getNombre();
         String tp1 = a.get(pos).getTipo1();
         String tp2 = a.get(pos).getTipo2();
 
-        PokemonInfoFragment elotro = (PokemonInfoFragment) getSupportFragmentManager().findFragmentById(R.id.Finfo);
-        if (elotro != null) {
-            //EL OTRO FRAGMENT EXISTE
-            elotro.actualizarDatos(n,tp1,tp2);
+        Intent i = new Intent(this, SecondActivity.class);
+        i.putExtra("nombre", n);
+        i.putExtra("tipo1", tp1);
+        i.putExtra("tipo2", tp2);
+        i.putExtra("user", usuario);
+        startActivity(i);
 
-        } else {
-            //EL OTRO FRAGMENT NO EXISTE, HAY QUE LANZAR LA ACTIVIDAD QUE LO CONTIENE
-            Intent i = new Intent(this, SecondActivity.class);
-            i.putExtra("nombre", n);
-            i.putExtra("tipo1", tp1);
-            i.putExtra("tipo2", tp2);
-            i.putExtra("user", usuario);
-            startActivity(i);
-        }
     }
 
     @Override
@@ -96,6 +92,8 @@ public class ListaPokemon extends AppCompatActivity implements PokemonListFragme
     // Al darle a favoritos en la barra superior cambiar a FavoritosActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        Log.i("Recorrido","Paso por onOptionsItemSelected ListaPokemon para acceder a la lista de favoritos");
         int id=item.getItemId();
         switch (id){
             default:{

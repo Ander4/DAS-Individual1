@@ -40,6 +40,8 @@ public class Register extends AppCompatActivity {
     // Comprobar los datos al darle al boton register
     public void onRegister(View v) {
 
+        Log.i("Recorrido","Paso por onRegister Register");
+
         EditText et;
         EditText et2;
 
@@ -49,6 +51,7 @@ public class Register extends AppCompatActivity {
 
             // Si está en LANDSCAPE conseguir los datos de su layout
 
+            Log.i("Recorrido", "Recivo los datos de Registro del layout LANDSCAPE");
             // Conseguir el usuario introducido
             et = findViewById(R.id.usernameRL);
             username = et.getText().toString();
@@ -61,6 +64,7 @@ public class Register extends AppCompatActivity {
 
             // Si está en PORTRAIT conseguir los datos de su layout
 
+            Log.i("Recorrido", "Recivo los datos de Registro del layout PORTRAIT");
             // Conseguir el usuario introducido
             et = findViewById(R.id.usernameR);
             username = et.getText().toString();
@@ -74,12 +78,14 @@ public class Register extends AppCompatActivity {
 
         if (!username.equals("") && !pass.equals("")) {
 
+            Log.i("Recorrido","El usuario y contraseña no están vacios");
             // Ejecutar el query para ver si el usuario esta en la tabla Usuarios
             Cursor c = bd.rawQuery("SELECT usuario FROM Usuarios WHERE usuario='" + username + "'", null);
 
             // Comprobar si el usuario esta en la base de datos
             if (!c.moveToNext()) {
 
+                Log.i("Recorrido","Meto el usuario y la contraseña en la base de datos");
                 // Si el usuario no esta meterlo y cambiar a main activity
                 String query = "INSERT INTO Usuarios(usuario, contraseña) VALUES(\'" + username + "\', \'" + pass + "\')";
                 bd.execSQL(query);
@@ -88,6 +94,8 @@ public class Register extends AppCompatActivity {
                 startActivityForResult(i, 66);
                 PendingIntent intentEnNot = PendingIntent.getActivity(this, 0, i, 0);
 
+
+                // Crear una notificación
                 NotificationManager elManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(this, "IdCanal");
 
@@ -119,6 +127,7 @@ public class Register extends AppCompatActivity {
 
             } else {
 
+                Log.i("Recorrido","El usuario ya está registrado");
                 // Si el usuario ya esta registrado hacer un toast para avisar de que el usuario ya esta en uso
                 Toast toast = Toast.makeText(this, "El usuario ya esta en uso", Toast.LENGTH_SHORT);
                 toast.show();
@@ -129,6 +138,7 @@ public class Register extends AppCompatActivity {
 
         } else {
 
+            Log.i("Recorrido","El usuario o contraseña están vacios");
             Toast toast = Toast.makeText(this, "Porfavor rellena los campos de usuario y contraseña", Toast.LENGTH_SHORT);
             toast.show();
 

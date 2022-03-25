@@ -55,7 +55,8 @@ public class PokemonInfoFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
 
-        // Recoger el usuario que le hemos pasado desde ListaPokemon
+        Log.i("Recorrido","Paso por onActivityCreated PokemonInfoFragment");
+        // Recoger los datos que le hemos pasado desde ListaPokemon
         Intent iin = this.getActivity().getIntent();
         Bundle b = iin.getExtras();
         nombre = (String) b.get("nombre");
@@ -66,6 +67,94 @@ public class PokemonInfoFragment extends Fragment {
 
         iniciarBD();
 
+        iniciarLayout();
+
+        setImage();
+
+        Log.d("prueba", "onActivityCreated PokemonListFragment: paso por aquí");
+
+        // Setear el onClick del boton Mas Info
+        btn_info.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Abrir en el navegador el link
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                startActivity(i);
+            }
+        });
+
+        // Setear el onClick del boton Favorito
+        btn_fav.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                // Ejecutar el query para comprobar si el pokemon esta en la lista de favoritos del usuario
+                Cursor c = bd.rawQuery("SELECT * FROM Favoritos WHERE usuario=\'"+usuario+"\' AND pokemon=\'"+nombre+"\'" , null);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                // Comprobar si el pokemon esta en la lista de favoritos del usuario
+                if (!c.moveToNext()) {
+
+                    // Crear un dialogo para que el usuario confirme el añadir el pokemon a favoritos
+                    builder.setMessage("¿Quieres añadir el pokemon " + nombre + " a tu lista de favoritos?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    // Ejecutar el query para añadir el pokemon a la lista de favoritos
+                                    bd.execSQL("INSERT INTO Favoritos(usuario,pokemon) VALUES(\'"+usuario+"\',\'"+nombre+"\')");
+                                    Log.i("Favoritos","Añadido a favoritos");
+
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // No hacer nada, cerrar el dialogo
+                                    dialog.cancel();
+                                }
+                            });
+                    //Creating dialog box
+                    AlertDialog alert = builder.create();
+                    //Setting the title manually
+                    alert.setTitle("Añadir a favoritos");
+                    alert.show();
+
+                } else {
+
+                    // Crear un dialogo para que el usuario confirme el borrar el pokemon de favoritos
+                    builder.setMessage("¿Quieres eliminar el pokemon " + nombre + " de tu lista de favoritos?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    // Ejecutar el query para eliminar el pokemon de la lista de favoritos
+                                    bd.execSQL("DELETE FROM Favoritos WHERE usuario=\'"+usuario+"\' AND pokemon=\'"+nombre+"\'");
+                                    Log.i("Favoritos","Borrado de favoritos");
+
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // No hacer nada, cerrar el dialogo
+                                    dialog.cancel();
+                                }
+                            });
+                    //Creating dialog box
+                    AlertDialog alert = builder.create();
+                    //Setting the title manually
+                    alert.setTitle("Borrar de favoritos");
+                    alert.show();
+
+                }
+
+                c.close();
+            }
+        });
+
+    }
+
+    public void iniciarLayout() {
+
+        Log.i("Recorrido","Paso por iniciarLayout PokemonInfoFragment");
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
@@ -95,89 +184,11 @@ public class PokemonInfoFragment extends Fragment {
 
         }
 
-        setImage();
-
-        Log.d("prueba", "onActivityCreated: paso por aquí");
-
-        // Setear el onClick del boton Mas Info
-        btn_info.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Abrir en el navegador el link
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                startActivity(i);
-            }
-        });
-
-        // Setear el onClick del boton Favorito
-        btn_fav.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                // Ejecutar el query para comprobar si el pokemon esta en la lista de favoritos del usuario
-                Cursor c = bd.rawQuery("SELECT * FROM Favoritos WHERE usuario=\'"+usuario+"\' AND pokemon=\'"+nombre+"\'" , null);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                // Comprobar si el pokemon esta en la lista de favoritos del usuario
-                if (!c.moveToNext()) {
-
-                    builder.setMessage("¿Quieres añadir el pokemon " + nombre + " a tu lista de favoritos?")
-                            .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-
-                                    // Si el pokemon no esta en la lista añadirlo
-                                    bd.execSQL("INSERT INTO Favoritos(usuario,pokemon) VALUES(\'"+usuario+"\',\'"+nombre+"\')");
-                                    Log.i("Favoritos","Añadido a favoritos");
-
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //  Action for 'NO' Button
-                                    dialog.cancel();
-                                }
-                            });
-                    //Creating dialog box
-                    AlertDialog alert = builder.create();
-                    //Setting the title manually
-                    alert.setTitle("Añadir a favoritos");
-                    alert.show();
-
-                } else {
-
-                    builder.setMessage("¿Quieres eliminar el pokemon " + nombre + " de tu lista de favoritos?")
-                            .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-
-                                    // Si el pokemon esta en la lista eliminarlo
-                                    bd.execSQL("DELETE FROM Favoritos WHERE usuario=\'"+usuario+"\' AND pokemon=\'"+nombre+"\'");
-                                    Log.i("Favoritos","Borrado de favoritos");
-
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //  Action for 'NO' Button
-                                    dialog.cancel();
-                                }
-                            });
-                    //Creating dialog box
-                    AlertDialog alert = builder.create();
-                    //Setting the title manually
-                    alert.setTitle("Borrar de favoritos");
-                    alert.show();
-
-                }
-
-                c.close();
-            }
-        });
-
     }
 
     private void iniciarBD() {
 
+        Log.i("Recorrido","Paso por iniciarBD PokemonInfoFragment");
         MiBD dbHelper = new MiBD(this.getActivity(),"pokedex",null,1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         bd = db;
@@ -213,31 +224,6 @@ public class PokemonInfoFragment extends Fragment {
 
             }
 
-        }
-
-    }
-
-    // Actualizar los parametros de acuerdo a los recibidos
-    public void actualizarDatos(String n, String tp1, String tp2){
-
-        Log.d("prueba", "actualizarDatos: llego aquí");
-
-        if (tv_nombre != null) {
-            tv_nombre.setText(n);
-            tv_tipo1.setText(tp1);
-            tv_tipo2.setText(tp2);
-            int resource = getResources().getIdentifier(nombre, "drawable", getContext().getPackageName());
-            //Drawable res = getResources().getDrawable(resource);
-            //iv_img.setImageDrawable(res);
-            iv_img.setImageResource(resource);
-        }
-        else {
-            // Se añade este else porque se puede acceder a actualizarDatos antes de obtener el View en onCreateView
-            // Esto ocurre cuando pasamos de la primera a la segunda actividad en modo portrait
-            Log.d("prueba", "actualizarDatos: entro al else");
-            nombre = n;
-            tipo1 = tp1;
-            tipo2 = tp2;
         }
 
     }

@@ -1,6 +1,7 @@
 package com.example.individual1;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,8 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
+        Log.i("Recorrido","Paso por getView CustomAdapter");
         view = inflter.inflate(R.layout.favoritos_list_view, null);
         TextView pokemon = (TextView) view.findViewById(R.id.textView);
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
@@ -51,6 +54,7 @@ public class CustomAdapter extends BaseAdapter {
     // Cambiar la imagen del pokemon dependiendo del nombre de este
     private void setImages(ImageView icon, String nombre) {
 
+        Log.i("Recorrido","Paso por setImages CustomAdapter");
         switch (nombre){
 
             case "Charmander": {

@@ -12,7 +12,7 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        Log.d("prueba", "onCreate: " + "entro");
+        Log.i("Recorrido","Paso por onCreate SecondActivity");
         PokemonInfoFragment elotro = (PokemonInfoFragment) getSupportFragmentManager().findFragmentById(R.id.Finfo);
         String n = getIntent().getStringExtra("nombre");
         String a = getIntent().getStringExtra("tipo1");

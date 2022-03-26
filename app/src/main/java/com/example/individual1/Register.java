@@ -123,6 +123,7 @@ public class Register extends AppCompatActivity {
 
                 elManager.notify(1, elBuilder.build());
                 Log.i("Notificacion", "Has sido notificado");
+                finish();
 
 
             } else {
